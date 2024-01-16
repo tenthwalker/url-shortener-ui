@@ -2,7 +2,6 @@ import React from 'react';
 import './UrlContainer.css';
 
 const UrlContainer = ({ urls }) => {
-  console.log(urls, "urls prop");
   const urlEls = urls.map(url => {
     return (
       <div className="url">
@@ -12,8 +11,6 @@ const UrlContainer = ({ urls }) => {
       </div>
     );
   });
-
-  console.log(urlEls, "urlEls")
 
   return (
     <section>

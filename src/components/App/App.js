@@ -6,12 +6,11 @@ import UrlForm from '../UrlForm/UrlForm';
 
 function App () {
   const [urls, setUrls] = useState([]);
-  console.log(urls, "urls")
 
   useEffect(() => {
     getUrls()
     .then(data => setUrls(data))
-  }, []);
+  });
 
   return (
     <main className="App">
@@ -19,7 +18,6 @@ function App () {
         <h1>URL Shortener</h1>
         <UrlForm />
       </header>
-
       <UrlContainer urls={ urls }/>
     </main>
   );
