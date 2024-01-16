@@ -1,17 +1,17 @@
 describe('App component', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:3000');
     cy.intercept('GET', 'http://localhost:3001/api/v1/urls', {
       statusCode: 200,
       fixture: 'urls',
     }).as('fetchURLs');
+    cy.visit('http://localhost:3000');
   });
 
   it('displays non-api reliant elements on page load', () => {
-    // cy.intercept('GET', 'http://localhost:3001/api/v1/urls', {
-    //   statusCode: 200,
-    //   fixture: 'urls',
-    // }).as('fetchURLs');
+    cy.intercept('GET', 'http://localhost:3001/api/v1/urls', {
+      statusCode: 200,
+      fixture: 'urls',
+    }).as('fetchURLs');
     cy.get('h1').should('contain', 'URL Shortener');
     cy.get('form').should('be.visible');
     cy.get('input').should('have.value', '');
@@ -37,6 +37,35 @@ describe('App component', () => {
     cy.get('input').last().type('https://docs.cypress.io/api/commands/type');
     cy.get('input').last().should('have.value', 'https://docs.cypress.io/api/commands/type');
     cy.get('button').click();
+    cy.intercept('POST', 'http://localhost:3001/api/v1/urls', {
+      statusCode: 201,
+      fixture: 'new',
+    }).as('postURL');
+    cy.intercept('GET', 'http://localhost:3001/api/v1/urls', {
+      statusCode: 200,
+      fixture: 'postpost',
+    }).as('fetchURLs');
     cy.get('input').should('have.value', '');
+  });
+
+  it('posts new data to the page', () => {
+    cy.get('input').should('have.value', '');
+    cy.get('input').first().type('new');
+    cy.get('input').first().should('have.value', 'new');
+    cy.get('input').last().type('https://docs.cypress.io/api/commands/type');
+    cy.get('input').last().should('have.value', 'https://docs.cypress.io/api/commands/type');
+    cy.get('button').click();
+    cy.intercept('POST', 'http://localhost:3001/api/v1/urls', {
+      statusCode: 201,
+      fixture: 'new',
+    }).as('postURL');
+    cy.intercept('GET', 'http://localhost:3001/api/v1/urls', {
+      statusCode: 200,
+      fixture: 'postpost',
+    }).as('fetchURLs');
+    cy.get('input').should('have.value', '');
+    cy.get('h3').last().should('contain', 'new');
+    cy.get('a').last().should('contain', 'http://localhost:3001/useshorturl/4');
+    cy.get('p').last().should('contain', 'https://docs.cypress.io/api/commands/type');
   });
 });
