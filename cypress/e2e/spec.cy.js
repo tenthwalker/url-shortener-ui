@@ -15,7 +15,8 @@ describe('App component', () => {
     cy.get('h1').should('contain', 'URL Shortener');
     cy.get('form').should('be.visible');
     cy.get('input').should('have.value', '');
-    cy.get('form').children().should('have.length', 2);
+    cy.get('button').should('be.visible');
+    cy.get('form').children().should('have.length', 3);
   });
 
   it('displays api data on the page', () => {
@@ -28,4 +29,14 @@ describe('App component', () => {
     cy.get('a').last().should('contain', 'http://localhost:3001/useshorturl/3');
     cy.get('p').last().should('contain', 'https://react.dev/reference/react/useState');
   });
-})
+
+  it('takes in new form data, then clears inputs on submission', () => {
+    cy.get('input').should('have.value', '');
+    cy.get('input').first().type('new');
+    cy.get('input').first().should('have.value', 'new');
+    cy.get('input').last().type('https://docs.cypress.io/api/commands/type');
+    cy.get('input').last().should('have.value', 'https://docs.cypress.io/api/commands/type');
+    cy.get('button').click();
+    cy.get('input').should('have.value', '');
+  });
+});
