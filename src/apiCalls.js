@@ -1,4 +1,5 @@
 export const getUrls = () => {
-  return fetch('http://localhost:3001/api/v1/urls')
-      .then(response => response.json())
+  const apiUrl = 'http://localhost:3001/api/v1/urls';
+  return fetch(apiUrl)
+    .then(response => response.json())
 }

@@ -4,7 +4,7 @@ function UrlForm() {
   const [title, setTitle] = useState('');
   const [urlToShorten, setUrlToShorten] = useState('');
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     clearInputs();
   }
@@ -21,7 +21,7 @@ function UrlForm() {
         placeholder='Title...'
         name='title'
         value={title}
-        // onChange={e => }
+        onChange={(e) => setTitle(e.value)}
       />
 
       <input
@@ -29,10 +29,10 @@ function UrlForm() {
         placeholder='URL to Shorten...'
         name='title'
         value={title}
-        // onChange={e => }
+        onChange={(e) => setUrlToShorten(e.value)}
       />
 
-      <button onClick={e => handleSubmit(e)}>
+      <button onClick={(e) => handleSubmit(e)}>
         Shorten Please!
       </button>
     </form>
