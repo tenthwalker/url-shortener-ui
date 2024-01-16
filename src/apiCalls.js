@@ -27,9 +27,6 @@ export const postUrl = (newData) => {
     }
     return response.json()
   })
-  .then(addedUrl => {
-    return getUrls()
-  })
   .catch(error => {
     alert(error.message);
     console.log(error);

@@ -20,6 +20,10 @@ describe('App component', () => {
   });
 
   it('displays api data on the page', () => {
+    cy.intercept('GET', 'http://localhost:3001/api/v1/urls', {
+      statusCode: 200,
+      fixture: 'urls',
+    }).as('fetchURLs');
     cy.get('.url').should('be.visible');
     cy.get('section').children().should('have.length', 3);
     cy.get('h3').first().should('contain', 'Awesome photo');
@@ -36,11 +40,11 @@ describe('App component', () => {
     cy.get('input').first().should('have.value', 'new');
     cy.get('input').last().type('https://docs.cypress.io/api/commands/type');
     cy.get('input').last().should('have.value', 'https://docs.cypress.io/api/commands/type');
-    cy.get('button').click();
     cy.intercept('POST', 'http://localhost:3001/api/v1/urls', {
       statusCode: 201,
       fixture: 'new',
     }).as('postURL');
+    cy.get('button').click();
     cy.intercept('GET', 'http://localhost:3001/api/v1/urls', {
       statusCode: 200,
       fixture: 'postpost',
@@ -54,11 +58,11 @@ describe('App component', () => {
     cy.get('input').first().should('have.value', 'new');
     cy.get('input').last().type('https://docs.cypress.io/api/commands/type');
     cy.get('input').last().should('have.value', 'https://docs.cypress.io/api/commands/type');
-    cy.get('button').click();
     cy.intercept('POST', 'http://localhost:3001/api/v1/urls', {
       statusCode: 201,
       fixture: 'new',
     }).as('postURL');
+    cy.get('button').click();
     cy.intercept('GET', 'http://localhost:3001/api/v1/urls', {
       statusCode: 200,
       fixture: 'postpost',
